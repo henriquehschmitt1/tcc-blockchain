@@ -1,0 +1,76 @@
+# switch to the base folder
+cd fabric-samples/test-network
+
+# bring up the network
+./network.sh up createChannel -c channel1 -ca
+
+# install default CC - asset-transfer (basic) chaincode
+cd ../asset-transfer-basic/chaincode-javascript
+npm install
+cd ../../test-network
+
+export PATH=${PWD}/../bin:$PATH
+export FABRIC_CFG_PATH=$PWD/../config/
+
+
+# export chaincode as tar.gz
+peer lifecycle chaincode package basic.tar.gz --path ../asset-transfer-basic/chaincode-javascript/ --lang node --label basic_1.0
+
+# install one peer0 Org1
+. ./scripts/envVar.sh
+
+setGlobals 1
+peer lifecycle chaincode install basic.tar.gz
+
+# install one peer0 Org2
+setGlobals 2
+peer lifecycle chaincode install basic.tar.gz
+
+# check installed chaincode and get PKID
+setGlobals 1
+peer lifecycle chaincode queryinstalled --peerAddresses localhost:7051 --tlsRootCertFiles organizations/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/tls/ca.crt
+
+export PKGID=basic_1.0:d2e3329812d27a187ea1f84b1a2c45cb7bf5e677a139044a3af3188e308f2c89
+
+# approve for Org1
+peer lifecycle chaincode approveformyorg -o localhost:7050 --ordererTLSHostnameOverride orderer.example.com --tls --cafile $PWD/organizations/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem --channelID channel1 --name basic --version 1 --package-id $PKGID --sequence 1
+
+# approve for Org2
+setGlobals 2
+peer lifecycle chaincode approveformyorg -o localhost:7050 --ordererTLSHostnameOverride orderer.example.com --tls --cafile $PWD/organizations/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem --channelID channel1 --name basic --version 1 --package-id $PKGID --sequence 1
+
+# commit the CC
+peer lifecycle chaincode commit -o localhost:7050 --ordererTLSHostnameOverride orderer.example.com --tls --cafile $PWD/organizations/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem --channelID channel1 --name basic --peerAddresses localhost:7051 --tlsRootCertFiles $PWD/organizations/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/tls/ca.crt --peerAddresses localhost:9051 --tlsRootCertFiles organizations/peerOrganizations/org2.example.com/peers/peer0.org2.example.com/tls/ca.crt --version 1 --sequence 1
+
+# check committed chaincode
+peer lifecycle chaincode querycommitted --channelID channel1 --name basic --cafile ${PWD}/organizations/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem
+
+
+# show if some containers are running
+docker ps
+docker-compose -f docker/docker-compose-test-net.yaml ps
+
+Firstly we have to enroll an admin user.
+cd ../myapp/ledger
+node caActions.js admin
+
+Secondly, we have to register and enroll an application user.
+node caActions.js user ufsc
+
+Start local mongodb
+
+docker run --name mongodb -p 27017:27017 -d -t mongo
+or, if already installed
+docker start mongodb
+
+create .env under fabric-samples/myapp/api with:
+
+MONGO_URI = mongodb://localhost:27017
+TOKEN_KEY = DSADD321890DASn489
+SECRET_KEY = 78fabab2-8862-11ec-a8a3-0242ac120002
+SECRET_IV = 3ba9f2ff-8069-4856-bf2a-04519c65d291
+
+Start api
+cd ../api
+
+node index.js
