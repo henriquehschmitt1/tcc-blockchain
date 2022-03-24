@@ -1,0 +1,212 @@
+{
+	"info": {
+		"_postman_id": "9e6b6d02-5c83-4f5e-9813-111f15697e35",
+		"name": "tcc",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "register",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"henrique@email.com\",\r\n    \"password\":\"1234\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/register",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"henrique@email.com\",\r\n    \"password\":\"1234\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/login",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create file into db",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "x-access-token",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjIzYjZlYzg2MWViYjQ3OGRjYjk2ZmEwIiwiZW1haWwiOiJoZW5yaXF1ZUBlbWFpbC5jb20iLCJpYXQiOjE2NDgwNjIxODMsImV4cCI6MTY0ODEwNTM4M30.i07UKLmtekeOWehCVD00Q68InFmMT5MDo_6-evtMzYA",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"fileName\": \"test.txt\",\r\n    \"owner\": \"Pedro Henrique\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/file",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"file"
+					],
+					"query": [
+						{
+							"key": "x-access-token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjIwMDM3NzNjYjlhNDE2ZDg5ZDg3MGE3IiwiZW1haWwiOiJoZW5yaXF1ZUBlbWFpYXNkbGFhc2Rhc2RkYXNkYXNhYWFhYS5jb20iLCJpYXQiOjE2NDQxODEzNjYsImV4cCI6MTY0NDIyNDU2Nn0.DUTfOW9zRHrnDaHAwhxwRA0NcHlYKNGUayYl6qf_73A",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get file content",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-access-token",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjIzYjZlYzg2MWViYjQ3OGRjYjk2ZmEwIiwiZW1haWwiOiJoZW5yaXF1ZUBlbWFpbC5jb20iLCJpYXQiOjE2NDgwNjIxODMsImV4cCI6MTY0ODEwNTM4M30.i07UKLmtekeOWehCVD00Q68InFmMT5MDo_6-evtMzYA",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "localhost:8080/file/test.txt",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"file",
+						"test.txt"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get all assets",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-access-token",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjIzYjZlYzg2MWViYjQ3OGRjYjk2ZmEwIiwiZW1haWwiOiJoZW5yaXF1ZUBlbWFpbC5jb20iLCJpYXQiOjE2NDgwNjIxODMsImV4cCI6MTY0ODEwNTM4M30.i07UKLmtekeOWehCVD00Q68InFmMT5MDo_6-evtMzYA",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "localhost:8080/file",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"file"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get all filtered",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-access-token",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjIzYjZlYzg2MWViYjQ3OGRjYjk2ZmEwIiwiZW1haWwiOiJoZW5yaXF1ZUBlbWFpbC5jb20iLCJpYXQiOjE2NDgwNjIxODMsImV4cCI6MTY0ODEwNTM4M30.i07UKLmtekeOWehCVD00Q68InFmMT5MDo_6-evtMzYA",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "localhost:8080/file/filtered/test.txt",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"file",
+						"filtered",
+						"test.txt"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "update file",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "x-access-token",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjIzNmMxODE3MTE5ZTBiODRmYTU4OTZlIiwiZW1haWwiOiJoZW5yaXF1ZUBlbWFpYXNkbGFhc2Rhc2RkYXNkYXNhYWFhYS5jb20iLCJpYXQiOjE2NDgwNDI3MDcsImV4cCI6MTY0ODA4NTkwN30.YQ1oeDAHxt4W9Aacki1YgKiukCB5hBLPg0dpCV777Tc",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"fileName\": \"test.txt\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/file/623b6f5061ebb478dcb96fa3",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"file",
+						"623b6f5061ebb478dcb96fa3"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
